@@ -46,9 +46,28 @@ namespace BasicCrud.Services
             return ExistUser;
         }
 
-        public Task<bool> DelUser(string userid)
+        public async Task<bool> DelUser(string userid)
         {
-            throw new System.NotImplementedException();
+            bool rtn = false;
+            try
+            {
+                //var existing = _appbContext.Users.FindAsync(userid);
+                var existing = await _appbContext.Users.Where(x => x.Id == userid).FirstOrDefaultAsync();
+                if (existing != null)
+                {
+                    //_userServices.Remove(existing);
+
+                    _appbContext.Remove(existing);
+                    await _appbContext.SaveChangesAsync();
+                    rtn = true;
+                }
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+            return rtn;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()

@@ -31,6 +31,8 @@ namespace BasicCrud
         {
             services.AddDbContext<AppDbContext>(opt =>opt.UseInMemoryDatabase("InMem"));
             services.AddScoped<IUsers,UserServices>();
+            services.AddScoped<IComputation, ComputationService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
